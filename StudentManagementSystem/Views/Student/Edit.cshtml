@@ -1,0 +1,92 @@
+﻿@model StudentManagementSystem.ViewModel.StudentViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>StudentViewModel</h4>
+<hr />
+
+@{ 
+    var test = Model;
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FatherName" class="control-label"></label>
+                <input asp-for="FatherName" class="form-control" />
+                <span asp-validation-for="FatherName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label"></label>
+                <input asp-for="Gender" class="form-control" />
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNo" class="control-label"></label>
+                <input asp-for="PhoneNo" class="form-control" />
+                <span asp-validation-for="PhoneNo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DOB" class="control-label"></label>
+                <input asp-for="DOB" class="form-control" />
+                <span asp-validation-for="DOB" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScholarshipId" class="control-label">Billing Type</label>
+                <select asp-for="ScholarshipId" class="form-control" asp-items="@(new SelectList(@ViewBag.scholarshipList,"Id","Type"))">
+                </select>
+                <span asp-validation-for="ScholarshipId" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="BillingType" class="control-label"></label>
+                <input asp-for="BillingType" class="form-control" />
+                <span asp-validation-for="BillingType" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="FacultyId" class="control-label">Faculty</label>
+                <select asp-for="FacultyId" class="form-control" asp-items="@(new SelectList(@ViewBag.facultyList,"Id","Name"))">
+                </select>
+                <span asp-validation-for="FacultyId" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="FacultyName" class="control-label"></label>
+                <input asp-for="FacultyName" class="form-control" />
+                <span asp-validation-for="FacultyName" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

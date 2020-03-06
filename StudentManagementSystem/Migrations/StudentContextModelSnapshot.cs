@@ -27,6 +27,7 @@ namespace StudentManagementSystem.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -79,8 +80,8 @@ namespace StudentManagementSystem.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<int?>("PhoneNo")
-                        .HasColumnType("integer");
+                    b.Property<string>("PhoneNo")
+                        .HasColumnType("text");
 
                     b.Property<string>("ScholarshipId")
                         .HasColumnType("text");

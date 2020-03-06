@@ -2,8 +2,10 @@
 using StudentManagementSystem.Models;
 using StudentManagementSystem.Repository;
 using StudentManagementSystem.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace StudentManagementSystem.Controllers
 {
@@ -21,26 +23,45 @@ namespace StudentManagementSystem.Controllers
             _scholarshipRepository = scholarshipRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string searchString, string currentFilter, int? pageNumber)
         {
-            var students = _studentRepository.GetAllStudents();
-            List<StudentViewModel> stdVmList = new List<StudentViewModel>();
-            foreach (var item in students)
+
+            var students = _studentRepository
+                .AsNoTrackingTable()
+                .Select(x => new StudentViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    FatherName = x.FatherName,
+                    Gender = x.Gender,
+                    Address = x.Address,
+                    Email = x.Email,
+                    PhoneNo = x.PhoneNo,
+                    DOB = x.DOB.Date,
+                    ScholarshipType = x.Scholarship.Type,
+                    FacultyName = x.Faculty.Name
+                });
+                       
+            ViewData["CurrentFilter"] = searchString;
+            if (!String.IsNullOrEmpty(searchString))
             {
-                StudentViewModel stdVm = new StudentViewModel();
-                stdVm.Id = item.Id;
-                stdVm.Name = item.Name;
-                stdVm.FatherName = item.FatherName;
-                stdVm.Gender = item.Gender;
-                stdVm.Address = item.Address;
-                stdVm.Email = item.Email;
-                stdVm.PhoneNo = item.PhoneNo;
-                stdVm.DOB = item.DOB.Date;
-                stdVm.ScholarshipType = item.Scholarship.Type;
-                stdVm.FacultyName = item.Faculty.Name;
-                stdVmList.Add(stdVm);
+                students = students.Where(s => s.Name.Contains(searchString));
             }
-            return View(stdVmList);
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewData["CurrentFilter"] = searchString;
+
+            int pageSize = 3;
+            //return View(stdVmList.OrderBy(x => x.Name));
+            return View(await PaginatedList<StudentViewModel>.CreateAsync(students, pageNumber ?? 1, pageSize));
         }
 
         public IActionResult Create()
@@ -59,6 +80,14 @@ namespace StudentManagementSystem.Controllers
         [HttpPost]
         public IActionResult Create(StudentViewModel studentVm)
         {
+            var facultyList = _facultyRepository.GetAllFaculties().ToList();
+            facultyList.Insert(0, new Faculty { Id = 0, Name = "Select" });
+
+            var scholarshipList = _scholarshipRepository.GetAllScholarshipType().ToList();
+            scholarshipList.Insert(0, new Scholarship { Id = "0", Type = "Select" });
+
+            ViewBag.facultyList = facultyList;
+            ViewBag.scholarshipList = scholarshipList;
             if (ModelState.IsValid)
             {
                 Student student = new Student
@@ -74,8 +103,9 @@ namespace StudentManagementSystem.Controllers
                     FacultyId = studentVm.FacultyId
                 };
                 Student newStudent = _studentRepository.Add(student);
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            return View();
         }
 
         public IActionResult Details(int id)

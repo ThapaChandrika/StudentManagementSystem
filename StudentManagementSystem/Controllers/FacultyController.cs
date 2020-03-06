@@ -33,8 +33,9 @@ namespace StudentManagementSystem.Controllers
             if (ModelState.IsValid)
             {
                 Faculty newFaculty = _facultyRepository.Add(faculty);
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            return View();
         }
 
         public IActionResult Details(int id)

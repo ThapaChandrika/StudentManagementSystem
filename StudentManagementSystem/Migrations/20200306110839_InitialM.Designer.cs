@@ -10,7 +10,7 @@ using StudentManagementSystem.Database;
 namespace StudentManagementSystem.Migrations
 {
     [DbContext(typeof(StudentContext))]
-    [Migration("20200305112738_InitialM")]
+    [Migration("20200306110839_InitialM")]
     partial class InitialM
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,6 +29,7 @@ namespace StudentManagementSystem.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -81,8 +82,8 @@ namespace StudentManagementSystem.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
-                    b.Property<int?>("PhoneNo")
-                        .HasColumnType("integer");
+                    b.Property<string>("PhoneNo")
+                        .HasColumnType("text");
 
                     b.Property<string>("ScholarshipId")
                         .HasColumnType("text");

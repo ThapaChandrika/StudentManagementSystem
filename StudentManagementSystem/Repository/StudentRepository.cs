@@ -37,6 +37,10 @@ namespace StudentManagementSystem.Models
         {
             return context.Student.Include(f=> f.Faculty).Include(b=> b.Scholarship);
         }
+        public IQueryable<Student> AsNoTrackingTable()
+        {
+            return context.Student.Include(f => f.Faculty).Include(b => b.Scholarship).AsNoTracking();
+        }
 
         public Student GetStudent(int id)
         {

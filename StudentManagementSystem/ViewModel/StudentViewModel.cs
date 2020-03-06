@@ -11,7 +11,7 @@ namespace StudentManagementSystem.ViewModel
     public class StudentViewModel
     {
         public int Id { get; set; }
-        
+
         [Required(ErrorMessage = "Enter the Name ")]
         [DataType(DataType.Text)]
         [Display(Name = "Name")]
@@ -36,23 +36,25 @@ namespace StudentManagementSystem.ViewModel
         [Display(Name = "Email Address")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-
-        [Required(ErrorMessage = "Enter the  PhoneNo ")]
-        [Display(Name = "PhoneNo")]
-        public int? PhoneNo { get; set; }
+       
+        [DataType(DataType.PhoneNumber)]
+        [Display(Name = "Phone No")]
+        //[RegularExpression(@"^(?([0-9]{3}))?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Invalid Phone number")]
+        public string PhoneNo { get; set; }
 
         [Required(ErrorMessage = "Enter the  DOB ")]
-        [Display(Name = "Date of Birth")]       
-        
+        [Display(Name = "Date of Birth")]
+
+        [DataType(DataType.Date)]
         public DateTime DOB { get; set; }
-            
+
         public string ScholarshipId { get; set; }
 
-        [Display(Name ="Scholarship Type")]        
+        [Display(Name = "Scholarship Type")]
         public string ScholarshipType { get; set; }
 
         public int FacultyId { get; set; }
-        [Display(Name ="Faculty")]
+        [Display(Name = "Faculty")]
         public string FacultyName { get; set; }
 
     }

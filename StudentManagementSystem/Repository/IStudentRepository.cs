@@ -12,5 +12,7 @@ namespace StudentManagementSystem.Models
         Student Add(Student student);
         Student Update(Student studentChanges);
         Student Delete(int id);
+
+        IQueryable<Student> AsNoTrackingTable();
     }
 }

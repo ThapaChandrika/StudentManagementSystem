@@ -25,9 +25,12 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.Id  }) |
+                @*@Html.ActionLink("Edit", "Edit", new {  id=item.Id  }) |
                 @Html.ActionLink("Details", "Details", new {  id=item.Id  }) |
-                @Html.ActionLink("Delete", "Delete", new {  id=item.Id  })
+                @Html.ActionLink("Delete", "Delete", new {  id=item.Id  })*@
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm m-1">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm m-1">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm m-1">Delete</a>
             </td>
         </tr>
 }

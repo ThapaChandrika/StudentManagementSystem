@@ -14,7 +14,7 @@ namespace StudentManagementSystem.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,7 +45,7 @@ namespace StudentManagementSystem.Migrations
                     Gender = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
-                    PhoneNo = table.Column<int>(nullable: true),
+                    PhoneNo = table.Column<string>(nullable: true),
                     DOB = table.Column<DateTime>(nullable: false),
                     ScholarshipId = table.Column<string>(nullable: true),
                     FacultyId = table.Column<int>(nullable: false)

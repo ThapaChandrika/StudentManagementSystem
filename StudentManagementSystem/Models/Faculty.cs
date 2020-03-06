@@ -13,8 +13,8 @@ namespace StudentManagementSystem.Models
         [ForeignKey("Student")]
         public int Id { get; set; }
         [Display(Name = "Faculty")]
+        [Required]
         public string Name { get; set; }
-
         public ICollection<Student> Students { get; set; }
 
     }

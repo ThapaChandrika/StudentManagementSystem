@@ -22,7 +22,7 @@ namespace StudentManagementSystem.Models
 
         public string Email { get; set; }
 
-        public int? PhoneNo { get; set; }
+        public string PhoneNo { get; set; }
    
         public DateTime DOB { get; set; }
 

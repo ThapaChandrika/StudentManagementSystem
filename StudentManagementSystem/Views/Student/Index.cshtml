@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StudentManagementSystem.ViewModel.StudentViewModel>
+﻿@model PaginatedList<StudentManagementSystem.ViewModel.StudentViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,10 +6,20 @@
 
 <h1>Index</h1>
 
-
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="SearchString" value="@ViewData["currentFilter"]" />&nbsp;
+            <input type="submit" value="Search" class="btn btn-outline-dark" />&nbsp; |&nbsp;&nbsp;&nbsp;
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
@@ -17,37 +27,45 @@
                     @Html.DisplayNameFor(model => model.Id)
                 </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.ActionLink("Name", "Index", new { currentFilter = ViewBag.CurrentFilter })
+                @* @Html.DisplayNameFor(model => model.Name )*@
             </th>
             @*<th>
+                @Html.ActionLink("FatherName", "Index", new { currentFilter = ViewBag.CurrentFilter })
+
                 @Html.DisplayNameFor(model => model.FatherName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Gender)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PhoneNo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DOB)
             </th>*@
+            <th>
+                @Html.ActionLink("Gender", "Index", new { currentFilter = ViewBag.CurrentFilter })
+                @*@Html.DisplayNameFor(model => model.Gender)*@
+            </th>
+            <th>
+                @Html.ActionLink("Address", "Index", new { currentFilter = ViewBag.CurrentFilter })
+                @* @Html.DisplayNameFor(model => model.Address)*@
+            </th>
+            <th>
+                @Html.ActionLink("Email", "Index", new { currentFilter = ViewBag.CurrentFilter })
+                @* @Html.DisplayNameFor(model => model.Email)*@
+            </th>
+            <th>
+                @Html.ActionLink("Phone No", "Index", new { currentFilter = ViewBag.CurrentFilter })
+                @* @Html.DisplayNameFor(model => model.PhoneNo)*@
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.DOB)
+                </th>*@
             @*<th>
                     @Html.DisplayNameFor(model => model.BillingId)
                 </th>*@
             @*<th>
-                @Html.DisplayNameFor(model => model.ScholarshipType)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.ScholarshipType)
+                </th>*@
             @*<th>
                     @Html.DisplayNameFor(model => model.FacultyId)
                 </th>*@
             <th>
-                @Html.DisplayNameFor(model => model.FacultyName)
+                @Html.ActionLink("Faculty", "Index", new { currentFilter = ViewBag.CurrentFilter })
+                @* @Html.DisplayNameFor(model => model.FacultyName)*@
             </th>
             <th></th>
         </tr>
@@ -63,8 +81,8 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 @*<td>
-                    @Html.DisplayFor(modelItem => item.FatherName)
-                </td>
+                        @Html.DisplayFor(modelItem => item.FatherName)
+                    </td>*@
                 <td>
                     @Html.DisplayFor(modelItem => item.Gender)
                 </td>
@@ -77,15 +95,15 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.PhoneNo)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DOB)
-                </td>*@
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.DOB)
+                    </td>*@
                 @*<td>
                         @Html.DisplayFor(modelItem => item.BillingId)
                     </td>*@
                 @*<td>
-                    @Html.DisplayFor(modelItem => item.ScholarshipType)
-                </td>*@
+                        @Html.DisplayFor(modelItem => item.ScholarshipType)
+                    </td>*@
                 @*<td>
                         @Html.DisplayFor(modelItem => item.FacultyId)
                     </td>*@
@@ -93,11 +111,28 @@
                     @Html.DisplayFor(modelItem => item.FacultyName)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm m-1">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary btn-sm m-1">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm m-1">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-dark @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-dark @nextDisabled">
+    Next
+</a>

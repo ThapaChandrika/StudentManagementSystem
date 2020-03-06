@@ -32,9 +32,11 @@ namespace StudentManagementSystem.Controllers
         {
             if (ModelState.IsValid)
             {
+                scholarship.DateCreated = DateTime.Now;
                 Scholarship newScholarship = _scholarshipRepository.Add(scholarship);
+                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index");
+            return View();
         }
 
         public IActionResult Details(string id)
